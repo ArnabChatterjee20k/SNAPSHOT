@@ -66,12 +66,16 @@ header h1, header p{
     text-align: center;
 }
 
+box-icon[name="like"]{
+    cursor: pointer;
+}
 .menu{
     position: absolute;
     top: 10%;
     right: 4%;
     background-color: black;
     box-shadow: 0 0px 7px 7px #ade6ae;
+    cursor: pointer;
     z-index: 2;
 }
 
@@ -90,7 +94,7 @@ nav{
     backdrop-filter: blur( 4px );
     -webkit-backdrop-filter: blur( 4px );
     transform: scale(0);
-    transition: 150ms ease-in-out;
+    transition: transform 150ms ease-in-out ;
 }
 
 

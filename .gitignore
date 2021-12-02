@@ -1,4 +1,7 @@
 info.txt
 .vscode
 env
-
+*.xlsx
+test.py
+test.db
+__pycache__
