@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snapshot</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
 </head>
 
@@ -17,7 +17,7 @@
                 <ul>
                     <li>
                         <h3>
-                            <a href="#">
+                            <a href="/post">
                                 Posts
                             </a>
                         </h3>
@@ -25,7 +25,7 @@
 
                     <li>
                         <h3>
-                            <a href="#">
+                            <a href="/profile">
                                 Profile
                             </a>
                         </h3>
@@ -42,9 +42,10 @@
         </header>
 
         <section class="image-gallery">
+            {% for img in img_list %}
             <div class="card">
                 <div class="image-container">
-                    <img src="/static/img/header-bg.jpg" alt="author name">
+                    <img src="data:;base64,{{ img.post | b64_img }}" alt="author name">
                 </div>
                 <h2>
                     Img Name
@@ -56,10 +57,11 @@
                     <box-icon type="solid" color="black" name='like' animation='tada' id="userid"></box-icon>
                 </p>
             </div>
+            {% endfor %}
 
         </section>
     </div>
-    <script src="/static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>
