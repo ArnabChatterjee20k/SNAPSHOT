@@ -5,6 +5,7 @@ const nav = document.querySelector("nav")
 const upload = document.getElementById("upload")
 const preview = document.getElementById("image_preview")
 const preview_text = document.getElementById("preview_text")
+const img_btn = document.getElementById("upload-btn")
 
 function class_toggle(firstClass,secondClass){
     if (firstClass.classList.contains("inactive")){
@@ -27,22 +28,30 @@ x_menu.addEventListener("click",function(){
 })
 
 
-upload.addEventListener("click",function(){
+img_btn.addEventListener("click",function(){
     let file = document.getElementById("file")
-    if(file){
-        preview_text.style.display = "none"
-        preview.style.display = "block"
-        preview.classList.add("preview_onload")
-        let new_img = URL.createObjectURL(file.files[0])
-        preview.src = new_img
-
-        const xhr = new XMLHttpRequest;
-        const form =  new FormData()
-        form.append("name","arnab")
-        form.append("file",file.files[0])
-
-        xhr.onload = function(){console.log(this.responseText)}
-        xhr.open("POST","/submit",true)
-        xhr.send(form)
-    }
+    file.click()
+        file.addEventListener("change",function(){
+            if(file){
+                // if file element exists then get the value of actual file from the array of files. Then if actual file is not none then execute this. At when we are setting the image in the frame before that there is no files array in the file element. So if any file is present in the array then do the action
+                let actual_file = file.files[0]
+                if(actual_file){
+                    preview_text.innerText = actual_file.name
+                    preview.style.display = "block"
+                    let new_img = URL.createObjectURL(file.files[0])
+                    preview.src = new_img
+                    const xhr = new XMLHttpRequest;
+                    const form =  new FormData()
+                    form.append("name","arnab")
+                    form.append("file",file.files[0])
+            
+                    xhr.onload = function(){console.log(this.responseText)}
+                    xhr.open("POST","/submit",true)
+                    xhr.send(form)
+                }
+            }
+            
+        })
+        
+    
 })

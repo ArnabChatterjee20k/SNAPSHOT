@@ -6,23 +6,34 @@
     user-select: none;
     font-family: 'Source Code Pro', monospace;
 }
+h2{
+    font-size: 1rem;
+}
 .content{
     width: 100%;
     min-height: 100vh;
     background-color: #4158D0;
     background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-size: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    animation: bg 4s alternate infinite;
+    animation: bg 10s alternate infinite;
 }
 @keyframes bg{
     0%{
-        background-position: left;
+        background-size: 100%;
+    }
+    50%{
+        background-size: 200%;
+    }
+    75%{
+        background-size: 150%;
     }
     100%{
-        background-position: right;
+        background-size: 300%;
+        background-color: #6a7cd4;
     }
 }
 nav{
@@ -37,8 +48,8 @@ nav{
 }
 a{
     display: block;
-    min-width: 10em;
-    max-width: 12em;
+    max-width: 12rem;
+    min-width: 7rem;
     text-decoration: none;
     font-size: 1.25rem;
     color: gold;
@@ -82,6 +93,7 @@ section{
 .container{
     margin: 6rem 0;
     min-width: 40%;
+    max-width: 90%;
     background: linear-gradient(to top, #f77062 0%, #fe5196 100%);
     padding: 5rem;
     display: flex;
@@ -124,31 +136,13 @@ input[type="text"]:valid ~ label {
     color: yellow;
 }
 
-input[type="file"]{
-    border: none;
-    border-radius: 20px;
-    background-color: transparent;
-}
-::-webkit-file-upload-button{
-    border: none;
-    padding: 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    background: #3D7EAA;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFE47A, #3D7EAA);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFE47A, #3D7EAA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    font-weight: 900;
-    color: whitesmoke;
-
-}
-
 .btn-grp{
     display: flex;
     align-items: center;
     /* justify-content: space-between; */
     flex-direction: column;
     width: 80%;
-    margin: 4rem;
+    margin: 2rem;
 }
 .btn{
     cursor: pointer;
@@ -163,32 +157,62 @@ input[type="file"]{
     margin: 1rem;
 }
 .preview{
-    max-width: 20rem;
-    max-height: 10rem;
+    max-width: 32rem;
     /* border: 2px solid rebeccapurple; */
     display: flex;
-    /* align-items: center; */
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 #image_preview{
     display: none;
-    width: 100%;
+    width: 40%;
     object-fit: contain;
     
 }
 
-.preview_onload{
-    /* background:whitesmoke; */
-    border: none;
-    display: block;
+.upload{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
-@media only screen and (max-width:700px){
-    .container{
-        width:90%;
-        border-radius: 18px;
-    }
+#upload{
+    width: 70%;
+    font-size: 1rem;
+    padding: 1em 0;
+}
+
+#upload-btn{
+    width: 5%;
+}
+
+#file{
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
     label{
         font-size: 1rem;
+    }
+    #upload-btn{
+        width: 20%;
+    }
+    .container{
+        padding: 5rem 2rem;
+        margin-top: 7rem;
+    }
+    #image_preview{
+        width: 60%;
+    }
+    #upload{
+        width: 100%;
+    }
+    a{
+        font-size: 1rem;
+    }
+    nav{
+        padding: 4rem;
     }
 }

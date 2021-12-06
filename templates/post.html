@@ -22,11 +22,15 @@
                     <input type="text" id="img-name" name="img-name"  required  autocomplete="off">
                     <label for="img-name">Image Name</label>
                 </div>
-                <input type="file" id="file">
+                <div class="upload">
+                    <input type="file" id="file">
+                    <img src="{{ url_for('static', filename='img/upload.png') }}" alt="Click To upload" id="upload-btn">
+                    <span>Upload File</span>
+                </div>
                 <div class="btn-grp">
                     <div class="preview">
                         <img src="" alt="Image-Preview" id="image_preview">
-                        <span id="preview_text">Choose file to preview</span>
+                        <h2 id="preview_text">Preview Box</h2>
                     </div>
                     <button id="upload" class="btn">upload</button>
                 </div>
