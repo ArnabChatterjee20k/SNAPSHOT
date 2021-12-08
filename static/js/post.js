@@ -33,10 +33,18 @@ img_btn.addEventListener("click",function(){
     file.click()
         file.addEventListener("change",function(){
             if(file){
-                // if file element exists then get the value of actual file from the array of files. Then if actual file is not none then execute this. At when we are setting the image in the frame before that there is no files array in the file element. So if any file is present in the array then do the action
+                // if file element exists then get the value of actual file from the array of files. Then if actual file is not none (means the array is not none and a file is present at 0 index of file) then execute this. At when we are setting the image in the frame before that there is no files array in the file element. So if any file is present in the array then do the action
                 let actual_file = file.files[0]
                 if(actual_file){
-                    preview_text.innerText = actual_file.name
+                    const full_filename = actual_file.name
+                    const spliced_filename = full_filename.split(".")
+                    let i;
+                    let file_extension;
+                    for(i in spliced_filename){
+                        file_extension = spliced_filename[i];
+                    }
+                    const actual_filename = full_filename.slice(0,5) + "..." + file_extension;
+                    preview_text.innerText = actual_filename
                     preview.style.display = "block"
                     let new_img = URL.createObjectURL(file.files[0])
                     preview.src = new_img

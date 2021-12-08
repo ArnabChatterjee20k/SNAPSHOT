@@ -15,16 +15,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 db=SQLAlchemy(app)
 
 # MODELS
+# this table is for mapping likes to post. If any user like the post then only things will be added.
 record = db.Table("mapping",
     db.Column("user_id",db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column("post_id",db.Integer, db.ForeignKey('post.id'), primary_key=True)
 )
+#Rather I can do I can keep one one rln between users and their posts. Bcoz one post can have one user but an user can have many post. This if for keeping post. Post table is having like column default to none.
+#And I can make many many to relation between users and the post they liked. I have to use the record table for keeping user name and post they are liking. Now while liking if user has not liked the post then we will do +1 to the like column in Post. Else if already liked we will not do +1.
 
+#One to many between user and post.
+#Many to many between 
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(10),unique=True,nullable = False)
     password = db.Column(db.String(20),nullable = False)
-    user_ref = db.relationship('Post', secondary=record, lazy='dynamic',
+    user_like_post = db.relationship('Post', secondary=record, lazy='dynamic',
         backref=db.backref('user'))
 
 class Post(db.Model):
@@ -32,6 +37,7 @@ class Post(db.Model):
     name = db.Column(db.String(10),nullable = False)
     post = db.Column(db.LargeBinary,nullable = False)
     like_count = db.Column(db.Integer,nullable = True,server_default = "0")
+    user_name = db.Column(db.String(100) , nullable = False )#name of the user who will be posting
 
 @app.route('/')
 def hello():
@@ -44,7 +50,7 @@ def post():
 
 @app.route("/profile")
 def profile():
-    return "profile"
+    return render_template("profile.html")
 
 @app.route("/submit",methods=['POST'])
 def submit():

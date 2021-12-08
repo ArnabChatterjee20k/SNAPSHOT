@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock  %}
+
+{% block nav1_item %}   Home  {% endblock%}
+{% block nav2_item %}   Post  {% endblock%}
+{% block nav_link %} /post  {% endblock%}
+
+{% block body %}
+<form class="form-signin">
+    <input type="text" placeholder="Name(unique)">
+    <input type="password" placeholder="Password">
+</form>
+{% endblock  %}

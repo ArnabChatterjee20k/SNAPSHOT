@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
-    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
-</head>
-<body>
-    <div class="content">
-        <box-icon name='menu' color="whitesmoke" class="menu" id="line-menu"></box-icon>
-        <box-icon name='x' class="menu inactive" color="whitesmoke" id="x-menu"></box-icon>
-        <nav>
-                <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-        </nav>
+{% extends 'base.html' %}
+
+{% block nav1_item %}   Home  {% endblock%}
+{% block nav2_item %}   Profile  {% endblock%}
+
+{% block nav_link %} /profile  {% endblock%}
+
+{% block body %}
         <section>
             <div class="container">
                 <div class="inputbox">
@@ -36,7 +26,4 @@
                 </div>
             </div>
         </section>
-    </div>
-    <script src="{{ url_for('static', filename='js/post.js') }}"></script>
-</body>
-</html>
+{% endblock  %}
