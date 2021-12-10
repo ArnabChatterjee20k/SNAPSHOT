@@ -112,8 +112,6 @@ section{
 }
 input{
     display: block;
-}
-input[type="text"],input[type="password"]{
     border: none;
     width: 100%;
     background: transparent;
@@ -130,8 +128,8 @@ label{
     font-size: 1.25rem;
 }
 
-input[type="text"]:focus ~ label,
-input[type="text"]:valid ~ label {
+input:focus ~ label,
+input:valid ~ label {
     top: -40px;
     color: yellow;
 }
