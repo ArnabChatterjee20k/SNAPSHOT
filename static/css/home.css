@@ -102,7 +102,7 @@ nav{
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
     grid-gap: 30px;
-    padding: 2rem;
+    padding: 5rem;
     font-family: 'Source Code Pro', monospace;
 }
 .card{
@@ -121,6 +121,10 @@ nav{
     justify-content: center;
 }
 
+.image-click{
+    /* img inside image-container */
+    cursor: pointer;
+}
 .lighthouse{
     display: none;
 }
@@ -146,6 +150,7 @@ nav{
     max-width: 60%;
     max-height: 80%;
 }
+
 
 @media only screen and (max-width: 730px) {
     h1 {

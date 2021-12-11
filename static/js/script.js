@@ -44,6 +44,7 @@ like.forEach(function (elem) {
 // lighthouse image gallery
 let images = document.querySelectorAll(".image-click");
 const lighthouse = document.querySelector(".lighthouse")
+const lighthouse_close_btn = document.querySelector(".lighthouse-close")
 images.forEach(function (element) {
     if (!lighthouse.classList.contains("lighthouse-open")) {
         element.onclick = function () {
@@ -54,7 +55,7 @@ images.forEach(function (element) {
             img.src = this.src
             img.setAttribute("class", "lighthouse-img")
             lighthouse.append(img)
-            lighthouse.onclick = function () {
+            lighthouse_close_btn.onclick = function () {
                 lighthouse.removeChild(img)
                 lighthouse.classList.remove("lighthouse-open")
             }
