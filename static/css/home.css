@@ -121,6 +121,32 @@ nav{
     justify-content: center;
 }
 
+.lighthouse{
+    display: none;
+}
+
+.lighthouse-open{
+    position: fixed;
+    backdrop-filter: blur( 40px );
+    -webkit-backdrop-filter: blur( 40px );
+    z-index: 3;
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background:  linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lighthouse-img{
+    max-width: 60%;
+    max-height: 80%;
+}
+
 @media only screen and (max-width: 730px) {
     h1 {
         font-size: 2.5rem;

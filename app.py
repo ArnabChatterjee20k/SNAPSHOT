@@ -61,13 +61,13 @@ def submit():
         print(file)#we will see it is a FIlestorage object
         file_data_bytes = file.read()
         
-        post = Post(name=name,post=file_data_bytes)
-        # db.session.add(post)
-        # db.session.commit()        
+        post = Post(name=name,post=file_data_bytes,user_name = "arnab")
+        db.session.add(post)
+        db.session.commit()        
         
         
-        # db.session.add(post)
-        # db.session.commit()
+        db.session.add(post)
+        db.session.commit()
         return {"name":name,"file":file.filename}
 
         
