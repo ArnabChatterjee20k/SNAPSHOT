@@ -65,11 +65,14 @@ def submit():
         db.session.add(post)
         db.session.commit()        
         
-        
         db.session.add(post)
         db.session.commit()
         return {"name":name,"file":file.filename}
 
-        
+@app.route("/login",methods=['POST'])
+def log():
+    # print(request.json)
+    return "Thanks for registering"
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(debug=True,host="0.0.0.0")#for running on all devices in the network.

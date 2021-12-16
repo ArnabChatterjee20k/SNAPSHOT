@@ -9,7 +9,31 @@
 
 {% block body %}
 <form class="form-signin">
-    <input type="text" placeholder="Name(unique)">
-    <input type="password" placeholder="Password">
+    <div class="heading">
+        <h1 class="title">Welcome!</h1>
+        <p class="catchup__line">Plz Fill all the info</p>
+    </div>
+    <div class="alert_container">
+        <!-- alert message from server -->
+        <p class="alert"></p>
+    </div>
+    <div class="details">
+        <div class="inputbox">
+            <label for="Name" class="label">Name</label>
+            <input type="text" placeholder="Name(unique)" id="Name" required autocomplete="off" class="entry">
+        </div>
+        <div class="inputbox">
+            <label for="Password" class="label">Password</label>
+            <input type="password" placeholder="Password" id="Password" required autocomplete="off" class="entry">
+        </div>
+        <div class="inputbox inputbox--btn">
+            <input type="button" value="LogIn" class="btn__login" id="btn_send_req">
+            <p class="link__register">Register</p>
+            <div class="loader"></div> <!-- here a class is going to add when ajax request will be successful -->
+        </div>
+    </div>
 </form>
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+
+
 {% endblock  %}
