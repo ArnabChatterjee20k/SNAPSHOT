@@ -102,13 +102,13 @@ input::placeholder{
     font-size: 1rem;
     padding: 1rem;
 }
-.warning{
+#warning{
     border: 2px solid red;
     background-color: #ffe5e570;
     color: red;
 }
 
-.success{
+#success{
     background-color: #b5ebb7;
     color: green;
     border: 2px solid green;

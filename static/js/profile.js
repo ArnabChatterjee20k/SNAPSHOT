@@ -7,7 +7,7 @@ function alert_msg(msg, category) {
     let alert = document.querySelector(".alert")
     alert.style.display = "block"
     alert.innerText = msg
-    alert.classList.add(category)
+    alert.id = category
 }
 
 function register() {
@@ -19,7 +19,7 @@ function register() {
 
         let name = document.getElementById("Name").value.trim()
         let password = document.getElementById("Password").value.trim()
-        if (name != "" & password != "") {
+        if (name != "" && password != "") {
             let obj = {
                 name: name,
                 password: password
@@ -60,4 +60,4 @@ function login(){
 
 }
 
-login()
+register()
