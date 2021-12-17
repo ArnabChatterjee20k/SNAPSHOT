@@ -1,6 +1,6 @@
 from flask import Flask , render_template , session , request
 from flask_sqlalchemy import SQLAlchemy
-import base64
+import base64,time
 app = Flask(__name__)
 
 #using custom filters of jinja for converting blob to image
@@ -31,6 +31,13 @@ class User(db.Model):
     password = db.Column(db.String(20),nullable = False)
     user_like_post = db.relationship('Post', secondary=record, lazy='dynamic',
         backref=db.backref('user'))
+    
+    @staticmethod
+    def add_data_user(name,password):
+        data = User(name = name , password = password)
+        db.session.add(data)
+        db.session.commit()
+    
 
 class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -52,6 +59,8 @@ def post():
 def profile():
     return render_template("profile.html")
 
+
+# Only post endpoints
 @app.route("/submit",methods=['POST'])
 def submit():
         name = request.form.get("name")
@@ -67,12 +76,20 @@ def submit():
         
         db.session.add(post)
         db.session.commit()
+
         return {"name":name,"file":file.filename}
 
-@app.route("/login",methods=['POST'])
+@app.route("/register",methods=['POST'])
+def reg():
+    # time.sleep(2)
+    return {"response":"Thanks for registering","category" : "success"},200
+
+
+@app.route("/log",methods=['POST'])
 def log():
-    # print(request.json)
-    return "Thanks for registering"
+    # time.sleep(2)
+    return {"response":"found","category" : "success"},200
+
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(debug=True,host="0.0.0.0")#for running on all devices in the network.

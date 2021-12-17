@@ -76,14 +76,6 @@ input::placeholder{
 
 }
 
-.link__register{
-    text-decoration: underline;
-    color:#97a8b5;
-    font-weight: 500;
-    cursor: pointer;
-    margin-bottom: 1rem;
-
-}
 @keyframes loading{
     from{
         transform: rotate(0turn);
@@ -93,12 +85,31 @@ input::placeholder{
     }
 }
 
-.alert_container{
-    border: 2px solid red;
-    background-color: #e0e7ed;
+.link__register{
+    text-decoration: underline;
+    color:#97a8b5;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: color 0.25s linear;
+}
+.link__register:hover{
+    color: black;
 }
 .alert{
-    color: red;
+    display: none;
     font-weight: 900;
     font-size: 1rem;
+    padding: 1rem;
+}
+.warning{
+    border: 2px solid red;
+    background-color: #ffe5e570;
+    color: red;
+}
+
+.success{
+    background-color: #b5ebb7;
+    color: green;
+    border: 2px solid green;
 }
