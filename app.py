@@ -1,6 +1,8 @@
-from flask import Flask , render_template , session , request
+from flask import Flask , render_template , session , request , url_for
 from flask_sqlalchemy import SQLAlchemy
 import base64,time
+
+from werkzeug.utils import escape
 app = Flask(__name__)
 
 #using custom filters of jinja for converting blob to image
@@ -32,13 +34,6 @@ class User(db.Model):
     user_like_post = db.relationship('Post', secondary=record, lazy='dynamic',
         backref=db.backref('user'))
     
-    @staticmethod
-    def add_data_user(name,password):
-        data = User(name = name , password = password)
-        db.session.add(data)
-        db.session.commit()
-    
-
 class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(10),nullable = False)
@@ -46,8 +41,11 @@ class Post(db.Model):
     like_count = db.Column(db.Integer,nullable = True,server_default = "0")
     user_name = db.Column(db.String(100) , nullable = False )#name of the user who will be posting
 
+def responsing(response,category,url=None):
+    return {"response":response , "category" : category , "redirect_url": url }
+
 @app.route('/')
-def hello():
+def home():
     img_list = Post.query.all()
     return render_template("index.html",img_list = img_list)
 
@@ -55,10 +53,13 @@ def hello():
 def post():
     return render_template("post.html")
 
-@app.route("/profile")
+@app.route("/form")
+def form():
+    return render_template("form.html")
+
+@app.route("/myprofile")
 def profile():
     return render_template("profile.html")
-
 
 # Only post endpoints
 @app.route("/submit",methods=['POST'])
@@ -81,14 +82,45 @@ def submit():
 
 @app.route("/register",methods=['POST'])
 def reg():
-    # time.sleep(2)
-    return {"response":"Thanks for registering","category" : "success"},200
+    time.sleep(2)
+    data =request.json
+    try:
+        name = data["name"]
+        password = data["password"]
+        url= url_for("home")
+        check = User.query.filter_by(name=name).first()
+        if check:
+            return responsing(response=f"User {name} Exists",category="warning")
+        else:
+            data = User(name = name , password = password)
+            db.session.add(data)
+            db.session.commit()
+
+            return responsing(response=f"Thanks for registering",category="success",url=url)
+    except:
+        return responsing(response="Some error occured",category="warning")
 
 
 @app.route("/log",methods=['POST'])
 def log():
-    # time.sleep(2)
-    return {"response":"found","category" : "success"},200
+    time.sleep(2)
+    data = request.json
+    try:
+        name = data["name"]
+        password = data["password"]
+
+        url= url_for("home")
+        user = User.query.filter_by(name=name).first()
+        if user:
+            if user.password == password:
+                return responsing(response=f"User {name} Found",category="success",url=url)
+            else:
+                return responsing(response=f"Incorrect Password",category="warning",url=url)
+        else:
+            return responsing(response=f"User {name} Not Found",category="warning",url=url)
+    
+    except:
+        return responsing(response="Some error occured",category="warning")
 
 if __name__ == '__main__':
     # app.run(debug=True)

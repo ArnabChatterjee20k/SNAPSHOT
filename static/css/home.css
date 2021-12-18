@@ -84,6 +84,7 @@ box-icon[name="like"]{
 nav{
     position: absolute;
     padding: 5%;
+    padding-top: 2%;
     /* background-color:rgba(245, 245, 245, 0.281); */
     width: 100%;
     top: 0;
@@ -160,6 +161,6 @@ nav{
         font-size: 1rem;
     }
     nav{
-        padding: 10%;
+        padding: 5%;
     }
 }

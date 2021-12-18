@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+{% endblock  %}
+
+{% block nav1_item %}   Home  {% endblock%}
+{% block nav2_item %}   Post  {% endblock%}
+{% block nav_link %} /post  {% endblock%}
+
+{% block body %}
+<form class="form-signin">
+    <div class="heading">
+        <h1 class="title">Welcome!</h1>
+        <p class="catchup__line">Plz Fill all the info</p>
+    </div>
+        <!-- alert message from server -->
+        <p class="alert"></p>
+    
+    <div class="details">
+        <div class="inputbox">
+            <label for="Name" class="label">Name</label>
+            <input type="text" placeholder="Name(unique)" id="Name" required autocomplete="off" class="entry">
+        </div>
+        <div class="inputbox">
+            <label for="Password" class="label">Password</label>
+            <input type="password" placeholder="Password(Don't give spaces)" id="Password" required autocomplete="off" class="entry">
+        </div>
+
+        <div class="inputbox inputbox--btn" id="log__cont">
+            <input type="button" value="LogIn" class="btn__login" id="btn_log_in">
+            <p class="link" id="reg__link">Register</p>
+        </div>
+        <div class="inputbox inputbox--btn inactive" id="reg__cont">
+            <input type="button" value="Register" class="btn__login" id="btn_reg">
+            <p class="link" id="log__link">LogIn</p>
+        </div>
+        <div class="loader"></div> <!-- here a class is going to add when ajax request will be successful -->
+    </div>
+</form>
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+
+
+{% endblock  %}
