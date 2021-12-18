@@ -1,20 +1,37 @@
-from flask import Flask , render_template , session , request , url_for
+from flask import Flask , render_template , session , request , url_for ,redirect
 from flask_sqlalchemy import SQLAlchemy
 import base64,time
 
-from werkzeug.utils import escape
+# app configuration
 app = Flask(__name__)
+app.config['SECRET_KEY']='ikdfdhkfhkh394930248204fdjsljncaa'
 
-#using custom filters of jinja for converting blob to image
-@app.template_filter("b64_img")
-def b64_img(img):
-    return base64.b64encode(img).decode("utf-8")
-    
+# db configurations
+db=SQLAlchemy(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://N1ShN0BNrG:Em8XZ8mENE@remotemysql.com/N1ShN0BNrG"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
-db=SQLAlchemy(app)
+
+# custom filters fun and decorators and wrappers
+@app.template_filter("b64_img")
+def b64_img(img):
+    """using custom filters of jinja for converting blob to image"""
+    return base64.b64encode(img).decode("utf-8")
+
+def custom_routing(function):
+    def execute():
+        if "user" in session:
+            # print(session["user"])
+            return function()
+        else:
+            return redirect(url_for("form"))
+    return execute
+
+def responsing(response,category,url=None):
+    """a template to send a custom serializable response"""
+    return {"response":response , "category" : category , "redirect_url": url }
+
 
 # MODELS
 # this table is for mapping likes to post. If any user like the post then only things will be added.
@@ -41,15 +58,15 @@ class Post(db.Model):
     like_count = db.Column(db.Integer,nullable = True,server_default = "0")
     user_name = db.Column(db.String(100) , nullable = False )#name of the user who will be posting
 
-def responsing(response,category,url=None):
-    return {"response":response , "category" : category , "redirect_url": url }
 
+# Endpoints for serving files.
 @app.route('/')
 def home():
     img_list = Post.query.all()
     return render_template("index.html",img_list = img_list)
 
 @app.route("/post")
+@custom_routing
 def post():
     return render_template("post.html")
 
@@ -61,7 +78,8 @@ def form():
 def profile():
     return render_template("profile.html")
 
-# Only post endpoints
+
+# Only post endpoints. Acting as a REST api
 @app.route("/submit",methods=['POST'])
 def submit():
         name = request.form.get("name")
@@ -95,7 +113,7 @@ def reg():
             data = User(name = name , password = password)
             db.session.add(data)
             db.session.commit()
-
+            session["user"] = name
             return responsing(response=f"Thanks for registering",category="success",url=url)
     except:
         return responsing(response="Some error occured",category="warning")
@@ -113,13 +131,15 @@ def log():
         user = User.query.filter_by(name=name).first()
         if user:
             if user.password == password:
+                session["user"] = name
                 return responsing(response=f"User {name} Found",category="success",url=url)
             else:
                 return responsing(response=f"Incorrect Password",category="warning",url=url)
         else:
             return responsing(response=f"User {name} Not Found",category="warning",url=url)
     
-    except:
+    except Exception as e:
+        # print(e)
         return responsing(response="Some error occured",category="warning")
 
 if __name__ == '__main__':
