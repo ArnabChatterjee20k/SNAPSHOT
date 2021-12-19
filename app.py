@@ -60,27 +60,27 @@ class Post(db.Model):
 
 
 # Endpoints for serving files.
-@app.route('/')
+@app.get('/')
 def home():
     img_list = Post.query.all()
     return render_template("index.html",img_list = img_list)
 
-@app.route("/post")
+@app.get("/post")
 @custom_routing
 def post():
     return render_template("post.html")
 
-@app.route("/form")
+@app.get("/form")
 def form():
     return render_template("form.html")
 
-@app.route("/myprofile")
+@app.get("/myprofile")
 def profile():
     return render_template("profile.html")
 
 
-# Only post endpoints. Acting as a REST api
-@app.route("/submit",methods=['POST'])
+# Only post endpoints. Acting as  REST api endpoints
+@app.post("/submit")
 def submit():
         name = request.form.get("name")
 
@@ -98,7 +98,7 @@ def submit():
 
         return {"name":name,"file":file.filename}
 
-@app.route("/register",methods=['POST'])
+@app.post("/register")
 def reg():
     time.sleep(2)
     data =request.json
@@ -119,7 +119,7 @@ def reg():
         return responsing(response="Some error occured",category="warning")
 
 
-@app.route("/log",methods=['POST'])
+@app.post("/log")
 def log():
     time.sleep(2)
     data = request.json
