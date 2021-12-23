@@ -76,6 +76,7 @@ def form():
 
 @app.get("/myprofile")
 def profile():
+    user = User.query.first()
     return render_template("profile.html")
 
 
