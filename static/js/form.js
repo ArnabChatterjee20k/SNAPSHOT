@@ -1,4 +1,3 @@
-console.log("profile")
 let btn_log_in = document.getElementById("btn_log_in");
 const  btn_log_in__value= btn_log_in.value;
 
@@ -42,11 +41,13 @@ function btn_action(endpoint,selected_btn,btn_value) {
                     
                     let response = message["response"]
                     let category = message["category"]
-                    let redirect_url = message["url"]
+                    let redirect_url = message["redirect_url"]
                     alert_msg(response, category)
                     
                     if(redirect_url){
                         window.location = redirect_url
+                    } else{
+                        console.log(redirect_url)
                     }
                 }
                 else {
