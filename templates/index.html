@@ -59,13 +59,13 @@
                 <div class="image-container">
                     <img src="data:;base64,{{ img.post | b64_img }}" alt="author name" class="image-click">
                 </div>
-                <h2>
-                    Img Name
+                <h2 class="image-title">
+                    {{ img.name }}
                 </h2>
                 <p>
-                    Author Name
+                    {{ img.author.name }} <!-- using backref author of User table to get the username-->
                 </p>
-                <p>
+                <p class="icon">
                     <box-icon type="solid" color="black" name='like' animation='tada' id="userid"></box-icon>
                 </p>
             </div>
