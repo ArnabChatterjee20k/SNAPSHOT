@@ -17,7 +17,7 @@
                 <ul>
                     <li>
                         <h3>
-                            <a href="/post">
+                            <a class="nav-link" href="/post">
                                 Posts
                             </a>
                         </h3>
@@ -25,7 +25,7 @@
 
                     <li>
                         <h3>
-                            <a href="/form">
+                            <a class="nav-link" href="/form">
                                 SignIn
                             </a>
                         </h3>
@@ -33,7 +33,7 @@
 
                     <li>
                         <h3>
-                            <a href="/myprofile">
+                            <a class="nav-link" href="/myprofile">
                                 MyProfile
                             </a>
                         </h3>
@@ -63,7 +63,10 @@
                     {{ img.name }}
                 </h2>
                 <p>
-                    {{ img.author.name }} <!-- using backref author of User table to get the username-->
+                    <a href="/userprofile/{{ img.author.id }}">
+                        {{ img.author.name }}
+                        <!-- using backref author of User table to get the username-->
+                    </a>
                 </p>
                 <p class="icon">
                     <box-icon type="solid" color="black" name='like' animation='tada' id="userid"></box-icon>

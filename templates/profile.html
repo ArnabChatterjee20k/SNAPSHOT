@@ -2,44 +2,81 @@
 
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
-{% endblock  %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/swiper.min.css') }}">
+{% endblock %}
 
-{% block nav1_item %}   Home  {% endblock%}
-{% block nav2_item %}   Post  {% endblock%}
-{% block nav_link %} /post  {% endblock%}
+{% block nav1_item %} Home {% endblock%}
+{% block nav2_item %} Post {% endblock%}
+{% block nav_link %} /post {% endblock%}
 
-{% block nav3_item %}   Signin  {% endblock%}
-{% block nav_link2 %} /form  {% endblock%}
+{% block nav3_item %} Signin {% endblock%}
+{% block nav_link2 %} /form {% endblock%}
 
 {% block body %}
 <!-- heading portion -->
 <header class="profile_info">
-        <div class="profile__view">
-            <p>SNAPSHOT</p>
-            <div class="profile__view-heading">
-                <h1>PROFILE - USER</h1>
-            </div>
+    <div class="profile__view">
+        <p>SNAPSHOT</p>
+        <div class="profile__view-heading">
+            <h1>{% if user_name %}
+                PROFILE - {{ user_name }}
+                {% else %}
+                <h1>PROFILE - {{ session.get("user") }}</h1>
+                {% endif %}
+            </h1>
+
         </div>
-    
-        <div class="profile__cols">
-            <div class="cols">
-                <h2 class="col_heading">NAME</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus, reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur exercitationem ipsa!</p>
-            </div>
-            <div class="cols">
-                <h2 class="col_heading">POSTS</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus, reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur exercitationem ipsa!</p>
-            </div>
-            <div class="cols">
-                <h2 class="col_heading">LIKES</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus, reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur exercitationem ipsa!</p>
-            </div>
+    </div>
+
+    <div class="profile__cols">
+        <div class="cols">
+            <h2 class="col_heading">NAME</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
+                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
+                exercitationem ipsa!</p>
         </div>
+        <div class="cols">
+            <h2 class="col_heading">POSTS</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
+                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
+                exercitationem ipsa!</p>
+        </div>
+        <div class="cols">
+            <h2 class="col_heading">LIKES</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
+                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
+                exercitationem ipsa!</p>
+        </div>
+    </div>
 </header>
 
 <!-- image slider portion -->
-<div class="section">
-    <div class="image__container">
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        {% for img in img_list %}
+        <div class="swiper-slide">
+            <img src="data:;base64,{{ img.post | b64_img }}" loading="lazy" alt="author name" class="image-click">
+        </div>
+        {% endfor %}
+        <div class="swiper-slide">Thanks..</div>
     </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
 </div>
+</div>
+<script src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+    });
+
+</script>
 {% endblock %}

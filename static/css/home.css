@@ -28,7 +28,7 @@ li{
     list-style: none;
 }
 
-a{
+a.nav-link{
     text-decoration: none;
     cursor: pointer;
     color: #00ffbc;
@@ -42,7 +42,7 @@ a{
 header{
     position: relative;
     width: 100%;
-    background: linear-gradient(rgba(94, 93, 93, 0.680), rgba(0, 0, 0, 0.8)),url(/static/img/header-bg.jpg);
+    background: linear-gradient(rgba(94, 93, 93, 0.680), rgba(0, 0, 0, 0.8)),url(/static/img/header-bg-min.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -71,7 +71,7 @@ box-icon[name="like"]{
 .menu{
     position: absolute;
     top: 10%;
-    right: 4%;
+    right: 10%;
     background-color: black;
     box-shadow: 0 0px 7px 7px #ade6ae;
     cursor: pointer;

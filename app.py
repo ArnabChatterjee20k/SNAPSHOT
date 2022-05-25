@@ -66,11 +66,18 @@ def form():
     return render_template("form.html",name=name,password=password)
 
 @app.get("/myprofile")
-# @custom_routing
-def profile():
-    return render_template("profile.html")
+@custom_routing
+def my_profile():
+    user_name = session.get("user")
+    user = User.query.filter_by(name=user_name).first()
+    img_list = Post.query.filter_by(author = user)
+    return render_template("profile.html",img_list=img_list)
 
-
+@app.get("/userprofile/<int:id>")
+def user_profile(id):
+    user = User.query.get_or_404(id)
+    img_list = Post.query.filter_by(author = user)
+    return render_template("profile.html",img_list=img_list,user_name=user.name)
 # Only post endpoints. Acting as  REST api endpoints
 @app.post("/submit")
 def submit():

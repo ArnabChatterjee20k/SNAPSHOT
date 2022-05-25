@@ -1,55 +1,60 @@
-.content{
+.content {
     background: none;
     animation: none;
 }
-nav{
+
+nav {
     position: fixed;
     z-index: 3;
     background-color: #713da29c;
 }
-a{
-    background-color:#713da2 ;
+
+a {
+    background-color: #713da2;
 }
-.menu{
+
+.menu {
     position: fixed;
-    z-index:4;
+    z-index: 4;
 }
-.profile_info{
-    background:linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)),url(/static/img/profile-bg-1.jpg);
+
+.profile_info {
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url(/static/img/profile-bg-1-min.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     min-height: 100vh;
     /* min-width: 100%; */
     color: whitesmoke;
-    
+
     display: flex;
-    justify-content:center;
+    justify-content: center;
     flex-direction: column;
     flex-grow: 1;
     padding: 2em;
 }
 
-.profile__cols{
+.profile__cols {
     margin-top: 3em;
     display: flex;
 }
 
-.cols{
+.cols {
     width: 100%;
     padding: 1em;
     box-shadow: 2px 6.7px 6.7px rgba(126, 235, 175, 0.534);
 }
-.profile__view{
+
+.profile__view {
     position: relative;
     text-transform: capitalize;
 }
 
-.profile__view-heading{
+.profile__view-heading {
     font-size: 1.5rem;
 }
 
-.profile__view ::before{
+.profile__view ::before {
     content: "";
     display: inline-block;
     position: absolute;
@@ -64,7 +69,7 @@ a{
     animation: fade infinite alternate 1s ease-in-out;
 }
 
-.col_heading{
+.col_heading {
     border-bottom: 1px solid ghostwhite;
 }
 
@@ -74,8 +79,9 @@ a{
         opacity: .4;
         border-color: yellow;
         background-color: yellow;
-        
+
     }
+
     to {
         opacity: 1;
         border-color: rgb(255, 145, 0);
@@ -83,23 +89,41 @@ a{
     }
 }
 
-@media (max-width:800px){
-    .profile__cols{
+@media (max-width:800px) {
+    .profile__cols {
         flex-direction: column;
     }
-    .profile__view-heading{
+
+    .profile__view-heading {
         font-size: 1rem;
     }
-    .profile__view ::before{
-        height:4rem ;
+
+    .profile__view ::before {
+        height: 4rem;
     }
 }
 
-@media (max-width:400px){
-    .profile__view-heading{
+@media (max-width:400px) {
+    .profile__view-heading {
         font-size: 0.7rem;
     }
-    .profile__view ::before{
-        height:3.8rem ;
+
+    .profile__view ::before {
+        height: 3.8rem;
     }
+}
+
+.swiper {
+    width: 240px;
+    height: 320px;
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
 }

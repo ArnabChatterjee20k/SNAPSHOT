@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +8,28 @@
     <title>Post</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
     {% block style %}
-    {% endblock  %}
+    {% endblock %}
     <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+
+
 </head>
+
 <body>
     <div class="content">
         <box-icon name='menu' color="whitesmoke" class="menu" id="line-menu"></box-icon>
         <box-icon name='x' class="menu inactive" color="whitesmoke" id="x-menu"></box-icon>
         <nav>
-                <li><a href="/">{% block nav1_item %}     {% endblock%}</a></li>
-                <li><a href="{% block nav_link %}{% endblock%}">{% block nav2_item %}      {% endblock%}</a></li>
-                <li><a href="{% block nav_link2 %}{% endblock%}">{% block nav3_item %}     {% endblock%}</a></li>
+            <li><a href="/">{% block nav1_item %} {% endblock%}</a></li>
+            <li><a href="{% block nav_link %}{% endblock%}">{% block nav2_item %} {% endblock%}</a></li>
+            <li><a href="{% block nav_link2 %}{% endblock%}">{% block nav3_item %} {% endblock%}</a></li>
         </nav>
-        
-    {% block body %}
-        
-    {% endblock %}
-</div>
-<script src="{{ url_for('static', filename='js/post.js') }}"></script>
+
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/post.js') }}"></script>
 </body>
+
 </html>
