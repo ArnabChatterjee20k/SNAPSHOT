@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 import base64 , os
 from faker import Faker
 from PIL import Image
+from flask_migrate import Migrate
 # app configuration
 app = Flask(__name__)
 app.config['SECRET_KEY']='ikdfdhkfhkh394930248204fdjsljncaa'
@@ -17,6 +18,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://N1ShN0BNrG:Em8XZ8mENE@remotemysql.com/N1ShN0BNrG"
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
+# migration
+migrate = Migrate(app=app , db=db)
 
 # custom filters fun and decorators and wrappers
 @app.template_filter("b64_img")
@@ -62,15 +65,20 @@ class User(db.Model):
     name = db.Column(db.String(10),unique=True,nullable = False)
     password = db.Column(db.String(20),nullable = False)
     post_name = db.relationship('Post',lazy="dynamic",backref=db.backref("author"))
+    like_id = db.relationship('Likes',lazy="dynamic",backref=db.backref("author"))
     
 class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(10),nullable = False)
     post = db.Column(db.LargeBinary,nullable = False)
-    like_count = db.Column(db.Integer,nullable = True,server_default = "0")
-    user_id = db.Column(db.String(100) , db.ForeignKey("user.id"),nullable = False )#name of the user who will be posting
+    # like_count = db.Column(db.Integer,nullable = True,server_default = "0")
+    user_id = db.Column(db.Integer , db.ForeignKey("user.id"),nullable = False )#name of the user who will be posting
+    like_id = db.relationship('Likes',lazy="dynamic",backref=db.backref("post"))
 
-
+class Likes(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer , db.ForeignKey("user.id"))
+    post_id = db.Column(db.Integer , db.ForeignKey("post.id"))
 # Endpoints for serving files.
 @app.get('/')
 def home():
@@ -93,13 +101,15 @@ def form():
 def my_profile():
     user_name = session.get("user")
     user = User.query.filter_by(name=user_name).first()
-    img_list = Post.query.filter_by(author = user)
+    # img_list = Post.query.filter_by(author = user)
+    img_list = user.post_name
     return render_template("profile.html",img_list=img_list)
 
 @app.get("/userprofile/<int:id>")
 def user_profile(id):
     user = User.query.get_or_404(id)
-    img_list = Post.query.filter_by(author = user)
+    # img_list = Post.query.filter_by(author = user)
+    img_list = user.post_name # as we are having post_name as the relation column
     return render_template("profile.html",img_list=img_list,user_name=user.name)
 # Only post endpoints. Acting as  REST api endpoints
 @app.post("/submit")
