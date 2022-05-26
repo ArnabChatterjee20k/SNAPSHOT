@@ -124,11 +124,13 @@ nav{
 }
 
 .image-title{
-    font-size: clamp(2rem,2vw,5rem);
+    font-size: clamp(1rem,1.4vw,3rem);
+    padding: 10px 0;
 }
 
 .icon{
     margin-top: auto;
+    padding: 10px 0;
 }
 
 .image-click{
