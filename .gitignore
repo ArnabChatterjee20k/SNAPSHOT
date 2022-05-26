@@ -7,3 +7,6 @@ test.db
 __pycache__
 *.jpeg
 *.png
+static/img/profile-bg-2.jpg
+static/img/profile-bg-1.jpg
+static/img/header-bg.jpg

@@ -1,7 +1,11 @@
+import io
+from logging import exception
+import pstats
 from flask import Flask , render_template , session , request , url_for ,redirect
 from flask_sqlalchemy import SQLAlchemy
 import base64 , os
 from faker import Faker
+from PIL import Image
 # app configuration
 app = Flask(__name__)
 app.config['SECRET_KEY']='ikdfdhkfhkh394930248204fdjsljncaa'
@@ -34,6 +38,25 @@ def responsing(response,category,url=None):
     """a template to send a custom serializable response"""
     return {"response":response , "category" : category , "redirect_url": url }
 
+def image_compressor(image):
+    # TODO: to compress images to specific dimension
+    """ 
+        If height and width are greater than 640 then compress
+    """
+    image_read_from_byte = Image.open(io.BytesIO(image))
+    width , height = image_read_from_byte.size
+
+    if height > 500 or width>500:
+        output_size = (500,500)
+        image_read_from_byte.thumbnail(output_size)
+
+        stream = io.BytesIO()
+        image_read_from_byte.save(stream , "PNG")
+
+        print("resizing",height,width)
+        return stream.getvalue()
+    print("not resizing",height,width)
+    return image
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(10),unique=True,nullable = False)
@@ -85,17 +108,19 @@ def submit():
 
         """requeat.file will give File storage object. We need to tranform it to bytes like this:-"""
         file = request.files.get("file")
-        print(file)#we will see it is a FIlestorage object
-        file_data_bytes = file.read()
-        
+        # print(file)#we will see it is a FIlestorage object
+        image_file_data_bytes = file.read()
+        compressed_image_file_data_bytes = image_compressor(image_file_data_bytes)
+
         user = User.query.filter_by(name=name).first()
-        post = Post(name=file.filename,post=file_data_bytes,author = user)
+        post = Post(name=file.filename,post=compressed_image_file_data_bytes,author = user)
         
         try:
             db.session.add(post)
             db.session.commit()
             return {"redirect_url" : url_for("home")}
-        except:
+        except Exception as e:
+            print(e)
             return {"message":"Some problem occured"}
 
 @app.post("/register")
