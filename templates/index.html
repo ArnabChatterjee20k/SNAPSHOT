@@ -69,7 +69,8 @@
                     </a>
                 </p>
                 <p class="icon">
-                    <box-icon type="solid" color="black" name='like' animation='tada' id="userid"></box-icon>
+                    <box-icon type="solid" color="black" name='like' animation='tada' id="{{img.id}}" style="margin-right: 0.5em;"></box-icon>
+                    {{ img.like_id.all() | length}}
                 </p>
             </div>
             {% endfor %}
