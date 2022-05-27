@@ -29,7 +29,8 @@ x_menu.addEventListener("click",function(){
 
 function sending_images(){
     // using closures 
-    const form =  new FormData()
+    const form =  new FormData(); // use set instead of append to overwrite the existing the values
+    let actual_filename;
     let file = document.getElementById("file")
     img_btn.addEventListener("click",function(){
         file.click()
@@ -45,21 +46,21 @@ function sending_images(){
                         for(extension in spliced_filename){
                             file_extension = spliced_filename[extension];
                         }
-                        const actual_filename = full_filename.slice(0,5) + "..." + file_extension;
+                        actual_filename = full_filename.slice(0,5) + "..." + file_extension;
                         preview_text.innerText = actual_filename
                         preview.style.display = "block"
                         let new_img = URL.createObjectURL(file.files[0])
                         preview.src = new_img
-                        form.append("file",file.files[0])
+                        form.set("file",file.files[0])
                     }
                 }
                 
             })
     })
     upload.onclick = ()=>{
-        const img_name = document.getElementById("img-name")
+        const img_name = document.getElementById("img-name").value
         if (file.files.length){
-            img_name?form.append("name",img_name.value):form.append("name",file.files[0].name)
+            img_name.length!=0?form.set("name",img_name.value):form.set("name",actual_filename)
             const xhr = new XMLHttpRequest;
             xhr.onload = function(){
                 const message = this.responseText;

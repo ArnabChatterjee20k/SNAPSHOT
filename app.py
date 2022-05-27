@@ -118,12 +118,13 @@ def submit():
 
         """requeat.file will give File storage object. We need to tranform it to bytes like this:-"""
         file = request.files.get("file")
+        post_name = request.form.get("name")
         # print(file)#we will see it is a FIlestorage object
         image_file_data_bytes = file.read()
         compressed_image_file_data_bytes = image_compressor(image_file_data_bytes)
 
         user = User.query.filter_by(name=name).first()
-        post = Post(name=file.filename,post=compressed_image_file_data_bytes,author = user)
+        post = Post(name=post_name,post=compressed_image_file_data_bytes,author = user)
         
         try:
             db.session.add(post)

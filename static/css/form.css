@@ -30,6 +30,19 @@
 .inputbox{
     margin-bottom: 2rem;
 }
+
+.inputbox-inputfield{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputbox-inputfield input{
+    margin-inline: 0.1rem;
+}
+.randomiser{
+    cursor: pointer;
+}
 .inputbox--btn{
     margin-top: 0rem;
     display: flex;
