@@ -23,11 +23,17 @@
     <div class="details">
         <div class="inputbox">
             <label for="Name" class="label">Name</label>
-            <input type="text" placeholder="Name(unique)" id="Name" required autocomplete="off" class="entry" value="{{ name }}">
+            <div class="inputbox-inputfield">
+                <input type="text" placeholder="Name(unique)" id="Name" required autocomplete="off" class="entry" data-value="{{ name }}">
+                <box-icon onclick="document.getElementById('Name').value = document.getElementById('Name').getAttribute('data-value')" name='dice-5' type='solid' color='#2bdb77' class="randomiser name-randomiser"></box-icon>
+            </div>
         </div>
         <div class="inputbox">
             <label for="Password" class="label">Password</label>
-            <input type="password" placeholder="Password(Don't give spaces)" id="Password" required autocomplete="off" class="entry" value="{{ password }}">
+            <div class="inputbox-inputfield">
+                <input type="password" placeholder="Password(Don't give spaces)" id="Password" required autocomplete="off" class="entry" data-value="{{ password }}">
+                <box-icon onclick="document.getElementById('Password').value = document.getElementById('Password').getAttribute('data-value')" name='dice-5' type='solid' color='#2bdb77' class="randomiser password-randomiser"></box-icon>
+            </div>
         </div>
 
         <div class="inputbox inputbox--btn" id="log__cont">
