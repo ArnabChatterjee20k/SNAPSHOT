@@ -1,7 +1,7 @@
 import io
 from logging import exception
 import pstats
-from flask import Flask , render_template , session , request , url_for ,redirect
+from flask import Flask, abort , render_template , session , request , url_for ,redirect
 from flask_sqlalchemy import SQLAlchemy
 import base64 , os
 from faker import Faker
@@ -29,7 +29,7 @@ def b64_img(img):
 
 def custom_routing(function):
     "a decorator for managing sessions"
-    def execute():
+    def execute(**kwargs):
         if "user" in session:
             return function()
         else:
@@ -56,9 +56,7 @@ def image_compressor(image):
         stream = io.BytesIO()
         image_read_from_byte.save(stream , "PNG")
 
-        print("resizing",height,width)
         return stream.getvalue()
-    print("not resizing",height,width)
     return image
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -176,6 +174,29 @@ def log():
         # print(e)
         return responsing(response="Some error occured",category="warning")
 
+@app.get("/likes/<int:post_id>")
+def likes(post_id):
+    if not session.get("user"):
+        return {"status":"please login","url":"/form"}
+    username = session.get("user")
+    user = User.query.filter_by(name=username).first()
+    post = Post.query.get(post_id)
+    like = Likes.query.filter_by(user_id= user.id, post_id=post_id).first() # using backref post
+    if not post:
+        return abort(404)
+    elif like:
+        try:
+            db.session.delete(like)
+            db.session.commit()
+            return {"status":"disliked"}
+        except Exception as e:
+            print(e)
+            return {"status":"erro"}
+    else:
+        new_like = Likes(user_id=user.id , post_id=post_id )
+        db.session.add(new_like)
+        db.session.commit()
+        return {"status":"liked"}
 if __name__ == '__main__':
     if not os.path.exists("/test.db"):
         db.create_all()
