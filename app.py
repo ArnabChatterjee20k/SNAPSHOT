@@ -1,6 +1,7 @@
 import io
 from logging import exception
 import pstats
+from webbrowser import get
 from flask import Flask, abort , render_template , session , request , url_for ,redirect
 from flask_sqlalchemy import SQLAlchemy
 import base64 , os
@@ -81,7 +82,10 @@ class Likes(db.Model):
 @app.get('/')
 def home():
     img_list = Post.query.all()
-    return render_template("index.html",img_list = img_list)
+    user_id = None        
+    if session.get("user"):
+        user_id = User.query.filter_by(name=session.get("user")).first().id
+    return render_template("index.html",img_list = img_list , user_id=user_id,Like=Likes)
 
 @app.get("/post")
 @custom_routing
@@ -176,6 +180,7 @@ def log():
 
 @app.get("/likes/<int:post_id>")
 def likes(post_id):
+    # we will get the userid from the session user
     if not session.get("user"):
         return {"status":"please login","url":"/form"}
     username = session.get("user")
@@ -191,7 +196,7 @@ def likes(post_id):
             return {"status":"disliked"}
         except Exception as e:
             print(e)
-            return {"status":"erro"}
+            return {"status":"error"}
     else:
         new_like = Likes(user_id=user.id , post_id=post_id )
         db.session.add(new_like)

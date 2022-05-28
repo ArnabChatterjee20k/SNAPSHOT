@@ -8,6 +8,8 @@
     <title>Snapshot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
 </head>
 
 <body>
@@ -69,8 +71,24 @@
                     </a>
                 </p>
                 <p class="icon">
-                    <box-icon type="solid" color="black" name='like' animation='tada' id="{{img.id}}" style="margin-right: 0.5em;"></box-icon>
-                    {{ img.like_id.all() | length}}
+                    {% if  session.get('user') %}
+                    <!-- if both user id and img id is present in like table then post is liked -->
+                        {% if Like.query.filter_by(user_id=user_id , post_id = img.id).first() %}
+                            <box-icon aria-disabled="false" type="solid"
+                                color="red" name='like' category="1" animation='tada' id="{{img.id}}"
+                                style="margin-right: 0.5em;"></box-icon>
+                        {% else %}
+                            <box-icon aria-disabled="false" type="solid"
+                                color="black" name='like' category="0" animation='tada' id="{{img.id}}"
+                                style="margin-right: 0.5em;"></box-icon>
+                        {% endif %}
+
+                    {% else %}
+                        <box-icon aria-disabled="true" type="solid"
+                            color="black" name='like' category="0" animation='tada' id="{{img.id}}"
+                            style="margin-right: 0.5em;"></box-icon>
+                    {% endif %}
+                    <span id="like-counter">{{ img.like_id.all() | length}}</span>
                 </p>
             </div>
             {% endfor %}
@@ -78,6 +96,24 @@
         </section>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- running scripts when home page is loaded -->
+    <script>
+        // when home page is opened
+        Toastify({
+            text: "Welcome To Snapshot!",
+            duration: 3000,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                "font-family": 'Roboto Mono',
+                color:"black",
+                background: "white",
+            }
+        }).showToast();
+    </script>
 </body>
 
 </html>
