@@ -2,7 +2,7 @@ import io
 from logging import exception
 import pstats
 from webbrowser import get
-from flask import Flask, abort , render_template , session , request , url_for ,redirect
+from flask import Flask, abort , render_template , session , request , url_for ,redirect , flash
 from flask_sqlalchemy import SQLAlchemy
 import base64 , os
 from faker import Faker
@@ -85,6 +85,8 @@ def home():
     user_id = None        
     if session.get("user"):
         user_id = User.query.filter_by(name=session.get("user")).first().id
+    # else:
+    flash("Not logged In!",category="success")
     return render_template("index.html",img_list = img_list , user_id=user_id,Like=Likes)
 
 @app.get("/post")

@@ -56,6 +56,19 @@
                 <!-- for opening an image-->
                 <box-icon name='x' class="lighthouse-close menu" color="whitesmoke"></box-icon>
             </div>
+
+            <!-- Message flashin for not logged in user -->
+            {% if not session.get("user") %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="toastify on  toastify-center toastify-top" style="background: red !important; color: white;">{{ message }}!</div>
+                            {% endfor %}
+                        {% endif %}
+                {% endwith %}
+            {% endif %}
+
+
             {% for img in img_list %}
             <div class="card">
                 <div class="image-container">
@@ -102,7 +115,7 @@
         // when home page is opened
         Toastify({
             text: "Welcome To Snapshot!",
-            duration: 3000,
+            duration: 400000000,
             close: true,
             gravity: "top", // `top` or `bottom`
             position: "center", // `left`, `center` or `right`
