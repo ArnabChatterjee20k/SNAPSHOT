@@ -34,20 +34,11 @@ a {
     padding: 2em;
 }
 
-.profile__cols {
-    margin-top: 3em;
-    display: flex;
-}
-
-.cols {
-    width: 100%;
-    padding: 1em;
-    box-shadow: 2px 6.7px 6.7px rgba(126, 235, 175, 0.534);
-}
 
 .profile__view {
     position: relative;
     text-transform: capitalize;
+    align-self: flex-start;
 }
 
 .profile__view-heading {
@@ -69,10 +60,21 @@ a {
     animation: fade infinite alternate 1s ease-in-out;
 }
 
-.col_heading {
-    border-bottom: 1px solid ghostwhite;
+.swiper {
+    margin-block: 2rem;
+    width: 240px;
+    height: 320px;
 }
 
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+}
 
 @keyframes fade {
     from {
@@ -111,19 +113,4 @@ a {
     .profile__view ::before {
         height: 3.8rem;
     }
-}
-
-.swiper {
-    width: 240px;
-    height: 320px;
-}
-
-.swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 18px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #fff;
 }

@@ -14,7 +14,7 @@
 
 {% block body %}
 <!-- heading portion -->
-<header class="profile_info">
+<section class="profile_info">
     <div class="profile__view">
         <p>SNAPSHOT</p>
         <div class="profile__view-heading">
@@ -24,47 +24,27 @@
                 <h1>PROFILE - {{ session.get("user") }}</h1>
                 {% endif %}
             </h1>
-
         </div>
     </div>
 
-    <div class="profile__cols">
-        <div class="cols">
-            <h2 class="col_heading">NAME</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
-                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
-                exercitationem ipsa!</p>
+    <!-- image slider portion -->
+    <div class="swiper mySwiper card">
+        <div class="swiper-wrapper">
+            {% for img in img_list %}
+            <div class="swiper-slide">
+                <img src="data:;base64,{{ img.post | b64_img }}" loading="lazy" alt="author name" class="image-click">
+            </div>
+            {% endfor %}
+            <div class="swiper-slide">{{ img_list.all() | length }} SnapShots</div>
         </div>
-        <div class="cols">
-            <h2 class="col_heading">POSTS</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
-                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
-                exercitationem ipsa!</p>
-        </div>
-        <div class="cols">
-            <h2 class="col_heading">LIKES</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, omnis quod! Est eveniet optio, ducimus,
-                reiciendis numquam ad harum, odit fugiat doloribus temporibus non dicta sit perspiciatis consequatur
-                exercitationem ipsa!</p>
-        </div>
-    </div>
-</header>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
 
-<!-- image slider portion -->
-<div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-        {% for img in img_list %}
-        <div class="swiper-slide">
-            <img src="data:;base64,{{ img.post | b64_img }}" loading="lazy" alt="author name" class="image-click">
-        </div>
-        {% endfor %}
-        <div class="swiper-slide">Thanks..</div>
     </div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+    </div>
+</section>
 
-</div>
-</div>
+
 <script src="{{ url_for('static', filename='js/swiper.min.js') }}"></script>
 <script>
     var swiper = new Swiper(".mySwiper", {
