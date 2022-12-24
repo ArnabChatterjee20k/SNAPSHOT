@@ -205,4 +205,4 @@ if __name__ == '__main__':
     if not os.path.exists("/test.db"):
         with app.app_context():
             db.create_all()
-    app.run(debug=True,host="0.0.0.0")#for running on all devices in the network.
+    app.run(host="0.0.0.0",port=5000)#for running on all devices in the network.
