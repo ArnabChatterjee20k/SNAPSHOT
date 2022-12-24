@@ -1,26 +1,22 @@
 import io
-from logging import exception
-import pstats
-from webbrowser import get
 from flask import Flask, abort , render_template , session , request , url_for ,redirect , flash
 from flask_sqlalchemy import SQLAlchemy
 import base64 , os
 from faker import Faker
 from PIL import Image
-from flask_migrate import Migrate
 # app configuration
 app = Flask(__name__)
 app.config['SECRET_KEY']='ikdfdhkfhkh394930248204fdjsljncaa'
 faker = Faker()
 
-# db configurations
-db=SQLAlchemy(app)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 # app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://N1ShN0BNrG:Em8XZ8mENE@remotemysql.com/N1ShN0BNrG"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:root@localhost/snapshot" // docker link
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
-# migration
-migrate = Migrate(app=app , db=db)
+# db configurations
+db=SQLAlchemy(app)
 
 # custom filters fun and decorators and wrappers
 @app.template_filter("b64_img")
@@ -61,14 +57,14 @@ def image_compressor(image):
     return image
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(10),unique=True,nullable = False)
+    name = db.Column(db.String(30),unique=True,nullable = False)
     password = db.Column(db.String(20),nullable = False)
     post_name = db.relationship('Post',lazy="dynamic",backref=db.backref("author"))
     like_id = db.relationship('Likes',lazy="dynamic",backref=db.backref("author"))
     
 class Post(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    name = db.Column(db.String(10),nullable = False)
+    name = db.Column(db.String(100),nullable = False)
     post = db.Column(db.LargeBinary,nullable = False)
     # like_count = db.Column(db.Integer,nullable = True,server_default = "0")
     user_id = db.Column(db.Integer , db.ForeignKey("user.id"),nullable = False )#name of the user who will be posting
@@ -154,7 +150,8 @@ def reg():
             db.session.commit()
             session["user"] = name
             return responsing(response=f"Thanks for registering",category="success",url=url)
-    except:
+    except Exception as e:
+        print(e)
         return responsing(response="Some error occured",category="warning")
 
 
@@ -206,5 +203,6 @@ def likes(post_id):
         return {"status":"liked"}
 if __name__ == '__main__':
     if not os.path.exists("/test.db"):
-        db.create_all()
+        with app.app_context():
+            db.create_all()
     app.run(debug=True,host="0.0.0.0")#for running on all devices in the network.
